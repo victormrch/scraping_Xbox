@@ -7,7 +7,7 @@ const axios = require("axios");
 const shops = [
   {
     vendor: "Game",
-    url: "https://www.game.es/HARDWARE/PACK-CONSOLA/PACKS/XBOX-ALL-ACCESS-XBOX-SERIES-X/195998",
+    url: "https://www.game.es/OFERTAS/PACK/PACKS/PACK-SEMINUEVO-NINTENDO-SWITCH-2-JOY-CON-A-ELEGIR/P02075",
     checkStock: async ({ page }) => {
       const content = await page.textContent(".product-quick-actions");
       return content.includes("Producto no disponible") === false;
@@ -15,7 +15,7 @@ const shops = [
   },
 ];
 
-cron.schedule("*/10 * * * *", () => {
+cron.schedule("*/1 * * * *", () => {
   (async () => {
     const browser = await chromium.launch();
 
