@@ -11,11 +11,11 @@
   "license": "ISC",
   "devDependencies": {
     "node-cron": "^3.0.0",
-    "playwright": "^1.21.0"
+    "playwright": "^1.21.0",
+    "playwright-chromium": "^1.21.0"
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3"
+    "dotenv": "^16.0.0"
   }
 }

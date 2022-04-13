@@ -1,13 +1,13 @@
 require("dotenv").config();
 var cron = require("node-cron");
 
-const { chromium } = require("playwright");
+const { chromium } = require("playwright-chromium");
 const axios = require("axios");
 
 const shops = [
   {
     vendor: "Game",
-    url: "https://www.game.es/HARDWARE/PACK-CONSOLA/PACKS/XBOX-ALL-ACCESS-XBOX-SERIES-X/195998",
+    url: "https://www.game.es/VIDEOJUEGOS/DEPORTES/PLAYSTATION-4/FIFA-22/191605",
     checkStock: async ({ page }) => {
       const content = await page.textContent(".product-quick-actions");
       return content.includes("Producto no disponible") === false;
@@ -15,9 +15,9 @@ const shops = [
   },
 ];
 
-cron.schedule("*/10 * * * *", () => {
+cron.schedule("*/1 * * * *", () => {
   (async () => {
-    const browser = await chromium.launch();
+    const browser = await chromium.launch({ chromiumSandbox: false });
 
     for (const shop of shops) {
       const { checkStock, vendor, url } = shop;
