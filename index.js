@@ -7,7 +7,7 @@ const axios = require("axios");
 const shops = [
   {
     vendor: "Game",
-    url: "https://www.game.es/VIDEOJUEGOS/DEPORTES/PLAYSTATION-4/FIFA-22/191605",
+    url: "https://www.game.es/HARDWARE/PACK-CONSOLA/PACKS/XBOX-ALL-ACCESS-XBOX-SERIES-X/195998",
     checkStock: async ({ page }) => {
       const content = await page.textContent(".product-quick-actions");
       return content.includes("Producto no disponible") === false;
@@ -15,7 +15,7 @@ const shops = [
   },
 ];
 
-cron.schedule("*/1 * * * *", () => {
+cron.schedule("*/10 * * * *", () => {
   (async () => {
     const browser = await chromium.launch({ chromiumSandbox: false });
 
@@ -24,7 +24,7 @@ cron.schedule("*/1 * * * *", () => {
       const page = await browser.newPage();
       await page.goto(url);
 
-      const hasStock = await checkStock({ page, url });
+      const hasStock = await checkStock({ page });
 
       const date = new Date().toUTCString();
 
