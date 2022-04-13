@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
   const shops = [
     {
       vendor: "Game",
-      url: "https://www.game.es/OFERTAS/PACK/PACKS/PACK-SEMINUEVO-NINTENDO-SWITCH-2-JOY-CON-A-ELEGIR/P02075",
+      url: "https://www.game.es/HARDWARE/PACK-CONSOLA/PACKS/XBOX-ALL-ACCESS-XBOX-SERIES-X/195998",
       checkStock: async ({ page }) => {
         const content = await page.textContent(".product-quick-actions");
         return content.includes("Producto no disponible") === false;
@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
     },
   ];
 
-  cron.schedule("*/1 * * * *", () => {
+  cron.schedule("*/10 * * * *", () => {
     (async () => {
       const browser = await chromium.launch();
 
@@ -34,8 +34,12 @@ app.get("/", (req, res) => {
 
         const hasStock = await checkStock({ page, url });
 
+        const date = new Date().toUTCString();
+
         console.log(
-          `${vendor}: ${hasStock ? "In Stock 💸 " : "Out of stock 😢 "}`
+          `🔹 ${date}--> ${vendor}: ${
+            hasStock ? "In Stock 💸 " : "Out of stock 😢 "
+          }`
         );
 
         if (hasStock) {
