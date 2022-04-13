@@ -13,6 +13,24 @@ const shops = [
       return content.includes("Producto no disponible") === false;
     },
   },
+  {
+    vendor: "Worten",
+    url: "https://www.worten.es/productos/consolas-juegos/xbox/consolas/xbox-series-x-s/consola-xbox-series-x-1-tb-7240976",
+    checkStock: async ({ page }) => {
+      const content = await page.textContent(".iss-product-stock-button");
+      return content.includes("Avisar cuando esté disponible") === false;
+    },
+  },
+  {
+    vendor: "Microsoft",
+    url: "https://www.xbox.com/es-es/configure/8WJ714N3RBTL",
+    checkStock: async ({ page }) => {
+      const content = await page.textContent(
+        '[aria-label="Finalizar la compra del pack"]'
+      );
+      return content.includes("Sin existencias") === false;
+    },
+  },
 ];
 
 cron.schedule("*/10 * * * *", () => {
@@ -36,8 +54,7 @@ cron.schedule("*/10 * * * *", () => {
 
       if (hasStock) {
         await axios.post(process.env.URL_DISCORD, {
-          content:
-            "🏃🏻‍♂️🏃🏻‍♂️Run!!!. There are stock in Game!!!! Buy the Xbox Serie - X, NOW!!!! Buy Link: 'https://bit.ly/3vd5Xyb'  ",
+          content: `🏃🏻‍♂️🏃🏻‍♂️Run!!!. There are stock in ${vendor}!!!! Buy the Xbox Serie - X, NOW!!!! Buy Link: '${url}' `,
         });
       }
     }
